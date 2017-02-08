@@ -24,8 +24,6 @@ class Event extends CI_Controller {
                 redirect('event');
             }
         }
-
-		$this->load->view('event/login_view');
 	}
 
 	public function home($id){

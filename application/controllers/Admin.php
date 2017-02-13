@@ -5,9 +5,14 @@
  * User: Minja Junior
  * Date: 11/21/2016
  * Time: 10:25 AM
+ *
+ * This Controller controls all the function about Admin
  */
 class Admin extends CI_Controller {
 
+    /**
+     * This function load Admin login page and process validation of Admin.
+     */
     public function index(){
 
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -26,12 +31,14 @@ class Admin extends CI_Controller {
                     $this->load->view('admin/login_view');
                 }
             }else {
-                //echo 'This email does not have any account in our system. sign up here';
                 $this->load->view('admin/login_view');
             }
         }
     }
 
+    /**
+     *This function load Admin Registration page and process registration validation.
+     */
     public function register(){
 
         $this->form_validation->set_rules('fullname', 'Full Name', 'required');
@@ -52,17 +59,13 @@ class Admin extends CI_Controller {
 
             $this->admin_model->register($values);
 
-            //$this->email->from('admin@pricecheck.co.tz', 'Admin');
-            //$this->email->to($this->input->post('email'));
-            //$this->email->subject('Welcome '.$this->input->post('username'));
-            //$this->email->message('Thanks for Register in Price Check. To activate your Account click the following link
-            //http://www.utamuescorts.net/index.php/escort/activate/'.$eid );
-            //$this->email->send();
-
             redirect('admin');
         }
     }
 
+    /*
+     * This function load Admin home page after login process complete
+     */
     public function home(){
         $data['event'] = $this->event_model->get_event($this->session->admin_id);
 
@@ -74,6 +77,9 @@ class Admin extends CI_Controller {
 
     }
 
+    /*
+     * This function process Admin logout process
+     */
     public function logout(){
         $this->session->sess_destroy();
         redirect('admin');

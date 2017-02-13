@@ -1,8 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/*
+ * This controller controls all the function about Events
+ */
 class Event extends CI_Controller {
 
+    /*
+     * This function load Event login page and process validation of the user
+     */
 	public function index() {
         $this->form_validation->set_rules('eventcode', 'Event Code', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -20,12 +26,14 @@ class Event extends CI_Controller {
                     redirect('event');
                 }
             }else {
-                //echo 'This email does not have any account in our system. sign up here';
                 redirect('event');
             }
         }
 	}
 
+	/*
+	 * This function load Event home page after the event login process completed
+	 */
 	public function home($id){
         if (!empty($this->session->admin_id) || !empty($this->session->event_id) ) {
             $data['event_details'] = $this->event_model->event_details($id);
@@ -42,11 +50,17 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This function process Event logout process
+     */
     public function logout(){
         $this->session->sess_destroy();
         redirect('event');
     }
 
+    /*
+     * This function load Create event page and process validation of event creation.
+     */
 	public function create(){
         $data['location'] = $this->event_model->get_location();
 
@@ -74,13 +88,6 @@ class Event extends CI_Controller {
 
                 $this->event_model->create($values);
 
-                //$this->email->from('admin@pricecheck.co.tz', 'Admin');
-                //$this->email->to($this->input->post('email'));
-                //$this->email->subject('Welcome '.$this->input->post('username'));
-                //$this->email->message('Thanks for Register in Price Check. To activate your Account click the following link
-                //http://www.utamuescorts.net/index.php/escort/activate/'.$eid );
-                //$this->email->send();
-
                 redirect('admin/home');
             }
         } else {
@@ -88,6 +95,9 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This function process the PHPExcel library to upload members list to the database
+     */
     public function upload_members($id){
 
         $config['upload_path']          = './upload/';
@@ -141,6 +151,9 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This function process the PHPExcel library to upload budget items to the database
+     */
     public function upload_budget($id){
 
         $config['upload_path']          = './upload/';
@@ -193,6 +206,9 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This function load new member registration page and process validation of adding new member
+     */
     public function new_member($id){
 
         $data['event_id'] = $id;
@@ -222,6 +238,9 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This function load new budget item page and process validation of adding new budget item
+     */
     public function new_item($id){
 
         $data['event_id'] = $id;
@@ -251,6 +270,9 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This function load member details to the edit member page and process validation of updating member details
+     */
     public function edit_member($id) {
 
         $data['member_id'] = $id;
@@ -279,6 +301,10 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This function load budget item details to the budget item edit page and process validation of updating
+     * budget item details
+     */
     public function edit_budget($id) {
 
         $data['item_id'] = $id;
@@ -307,6 +333,13 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This function process all transaction ie(Pledge, Cash, Cost, Payment)
+     * Pledge = This is the amount member pledge
+     * Cash = This is the amount member have already submit it to the accountant
+     * Cost = This is the amount budget item cost
+     * Payment = This is the amount budget item paid
+     **/
     public function transaction($type, $id){
 
         $data['type'] = $type;
@@ -317,7 +350,6 @@ class Event extends CI_Controller {
             $data['item_id'] = $id;
             $data['item_detail'] = $this->event_model->budget_detail($id);
         }
-
 
         if (!empty($this->session->admin_id)){
 
@@ -368,13 +400,15 @@ class Event extends CI_Controller {
                     $this->event_model->update_budget($values, $id);
                     redirect('event/edit_budget/'.$id);
                 }
-
             }
         } else {
             redirect('admin');
         }
     }
 
+    /*
+     * This function process the download of Member template excel file and Budget Template excel file
+     */
     public function template($name){
         if ($name == 'member'){
             redirect(base_url('templates/MemberTemplate.xlsx'));
@@ -383,6 +417,9 @@ class Event extends CI_Controller {
         }
     }
 
+    /*
+     * This is the test function to test the upload of the document
+     */
     public function do_upload()
     {
         $config['upload_path']          = './upload/';

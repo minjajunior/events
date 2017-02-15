@@ -28,10 +28,12 @@ $this->load->view('shared/header');
             </div>
             <!-- //header-ends -->
             <div class="outter-wp">
-                <div class="profile-widget">
+                <div class="ribbon both_ribbon">
                     <?php foreach($event_details as $ed){ ?>
-                        <h2><?php echo $ed->event_name?></h2>
-                        <h5>Event Date: <?php echo date_format(date_create($ed->event_date), 'l, jS F Y') ?></h5>
+                        <h1><?php echo $ed->event_name?></h1>
+                        <h4>Event Date: <?php echo date_format(date_create($ed->event_date), 'l, jS F Y') ?></h4>
+                        <?php $td = date_create(date('Y-m-d')); $de = date_create($ed->event_date); $in = date_diff($td, $de); ?>
+                        <h4>Days Remaining: <?php echo $in->format('%a days') ?></h4>
                     <?php } ?>
                 </div>
                 <hr/>

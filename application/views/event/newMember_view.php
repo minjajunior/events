@@ -75,6 +75,13 @@ $this->load->view('shared/header');
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label for="focusedinput" class="col-sm-2 control-label">Phone Number</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="memberphone" value="<?php echo set_value('memberphone'); ?>" class="form-control1" id="focusedinput" placeholder="Phone Number">
+                                                <?php echo form_error('memberphone'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <div class="col-sm-8 col-md-offset-2">
                                                 <button type="submit" class="btn btn-default">Create</button>
                                             </div>

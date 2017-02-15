@@ -120,6 +120,7 @@ class Event extends CI_Controller {
                 $mn = "";
                 $mp = "0";
                 $mc = "0";
+                $pn = "";
                 $cellIterator = $row->getCellIterator();
                 $cellIterator->setIterateOnlyExistingCells(true);
                 foreach ($cellIterator as $cell) {
@@ -129,6 +130,8 @@ class Event extends CI_Controller {
                         $mp = $cell->getValue();
                     }elseif($cell->getColumn() == "C") {
                         $mc = $cell->getValue();
+                    }elseif($cell->getColumn() == "D") {
+                        $pn = $cell->getValue();
                     }
                 }
                 if($mn != "Member Name"){
@@ -136,6 +139,7 @@ class Event extends CI_Controller {
                         'member_name' => $mn,
                         'member_pledge' => $mp,
                         'member_cash' => $mc,
+                        'member_phone' => $pn,
                         'event_id' => $id
                     );
                     $this->event_model->insert_member($values);
@@ -218,6 +222,7 @@ class Event extends CI_Controller {
             $this->form_validation->set_rules('membername', 'Member Name', 'required');
             $this->form_validation->set_rules('memberpledge', 'Member Pledge', 'numeric');
             $this->form_validation->set_rules('membercash', 'Member Cash', 'numeric');
+            $this->form_validation->set_rules('memberphone', 'Phone Number', 'numeric');
 
             if ($this->form_validation->run() == FALSE) {
                 $this->load->view('event/newMember_view', $data);
@@ -226,6 +231,7 @@ class Event extends CI_Controller {
                     'member_name' => $this->input->post('membername'),
                     'member_pledge' => $this->input->post('memberpledge'),
                     'member_cash' => $this->input->post('membercash'),
+                    'member_phone' => $this->input->post('memberphone'),
                     'event_id' => $id
                 );
 
@@ -284,12 +290,14 @@ class Event extends CI_Controller {
             $this->form_validation->set_rules('membername', 'Member Name', 'required');
             $this->form_validation->set_rules('memberpledge', 'Member Pledge', 'numeric');
             $this->form_validation->set_rules('membercash', 'Member Cash', 'numeric');
+            $this->form_validation->set_rules('memberphone', 'Phone Number', 'numeric');
 
             if ($this->form_validation->run() == FALSE) {
                 $this->load->view('event/editMember_view', $data);
             } else {
                 $values = array(
                     'member_name' => $this->input->post('membername'),
+                    'member_phone' => $this->input->post('memberphone'),
                 );
 
                 $this->event_model->update_member($values, $id);

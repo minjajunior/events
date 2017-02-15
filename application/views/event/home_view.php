@@ -142,8 +142,9 @@ $this->load->view('shared/header');
                         <div class="clearfix"> </div>
                     </div>
                 </div>
+                <div class="clearfix"> </div>
                 <!--//custom-widgets-->
-
+                <?php if(isset($this->session->admin_id)){?>
                 <!--/charts-->
                 <div class="charts">
                     <div class="chrt-inner">
@@ -269,6 +270,7 @@ $this->load->view('shared/header');
                     </div>
                     <!--/charts-inner-->
                 </div>
+                <?php } ?>
                 <!--//outer-wp-->
             </div>
             <!--footer section start-->

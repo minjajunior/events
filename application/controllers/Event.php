@@ -44,10 +44,35 @@ class Event extends CI_Controller {
             $data['budget_sum'] = $this->event_model->budget_sum($id);
             $data['advance_sum'] = $this->event_model->advance_sum($id);
             $data['event_id'] = $id;
-            $this->load->view('event/home_view', $data);
+
+            $this->load->view('event/default_view', $data);
         } else {
             redirect('event');
         }
+    }
+
+
+    public function load_views(){
+
+
+        if(!empty($_POST['view_name']) ||!empty($_POST['event_id']) || !empty($this->session->admin_id) || !empty($this->session->event_id)){
+
+
+            $id = $_POST['event_id'];
+            $data['event_details'] = $this->event_model->event_details($id);
+            $data['member_details'] = $this->event_model->member_details($id);
+            $data['budget_details'] = $this->event_model->budget_details($id);
+            $data['pledge_sum'] = $this->event_model->pledge_sum($id);
+            $data['cash_sum'] = $this->event_model->cash_sum($id);
+            $data['budget_sum'] = $this->event_model->budget_sum($id);
+            $data['advance_sum'] = $this->event_model->advance_sum($id);
+            $data['event_id'] = $id;
+            $view_name = $_POST['view_name'];
+
+
+            $this->load->view('event/'.$view_name,$data);
+        }
+
     }
 
     /*
@@ -440,5 +465,45 @@ class Event extends CI_Controller {
 
             //$this->load->view('upload_success', $data);
         }
+    }
+
+
+    public function reports(){
+        $id=1;
+
+        if (!empty($this->session->admin_id) || !empty($this->session->event_id) ) {
+
+
+            $data['event_details'] = $this->event_model->event_details($id);
+            $data['member_details'] = $this->event_model->member_details($id);
+            $data['budget_details'] = $this->event_model->budget_details($id);
+            $data['pledge_sum'] = $this->event_model->pledge_sum($id);
+            $data['cash_sum'] = $this->event_model->cash_sum($id);
+            $data['budget_sum'] = $this->event_model->budget_sum($id);
+            $data['advance_sum'] = $this->event_model->advance_sum($id);
+            $data['event_id'] = $id;
+                   /*
+            *
+            *
+            $data = array(
+            'category' => $this->input->post('category'),
+            'attribute' => $this->input->post('attribute')
+            );
+
+        */
+            $values = array(
+                'category' => 'member',
+                'attribute' => '5000',
+                'event_id'=>'1'
+            );
+            $data['event'] = $this->event_model->event_report($values);
+
+
+            $this->load->view('event/reports_view', $data);
+        } else {
+            redirect('event');
+        }
+
+
     }
 }

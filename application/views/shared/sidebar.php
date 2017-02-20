@@ -25,6 +25,9 @@
         <div class="menu">
             <ul id="menu" >
                 <li><a href="<?php echo site_url('admin/home')?>"><i class="fa fa-home"></i> <span>Home</span></a></li>
+                <li><a href="javascript:void(0)" class="menu_item" rel="<?php echo $event_id; ?>" id="budget_view"><i class=" fa fa-home"></i> <span>Budget</span></a></li>
+                <li><a href="javascript:void(0)" class="menu_item" rel="<?php echo $event_id; ?>" id="members_view"><i class=" fa fa-home"></i> <span>Members </span></a></li>
+                <li><a href="javascript:void(0)" class="menu_item" rel="<?php echo $event_id; ?>" id="reports_view"><i class="fa fa-home"></i> <span>Reports</span></a></li>
                 <li><a href="<?php echo site_url('admin/logout')?>"><i class="fa fa-sign-out"></i> <span>Logout</span></a></li>
             </ul>
         </div>
@@ -48,6 +51,9 @@
 <div class="clearfix"></div>
 </div>
 <script>
+
+    $(document).ready(function() {
+
     var toggle = true;
 
     $(".sidebar-icon").click(function() {
@@ -66,7 +72,47 @@
 
         toggle = !toggle;
     });
+
+
+
+        var getContentView = function(postData) {
+        //alert(postData['event_id']);
+            $.ajax(
+                {
+                    type:"POST",
+                    url: "<?php echo base_url('Event/load_views')?>",
+                    //data:"id="+view_name,
+                    data:postData,
+                    dataType: "html",
+                    success: function(data) {
+                        $('#load_navigation_menu_view').html(data);
+                    },
+                    error: function(data) {
+
+                        alert('An error has occured trying to get the album details');
+                    }
+                });
+        }
+
+
+        $('#menu').on("click", ".menu_item", function() {
+            var view_name = $(this).attr("id");
+            var event_id = $(this).attr("rel");
+            var postData = {
+                'view_name': view_name,
+                'event_id': event_id,
+            };
+
+            getContentView(postData);
+
+
+        });
+
+
+    });
 </script>
+
+
 <!--js -->
 <link rel="stylesheet" href="css/vroom.css">
 <script type="text/javascript" src="<?php echo base_url('assets/js/vroom.js')?>"></script>
@@ -76,5 +122,6 @@
 <script src="<?php echo base_url('assets/js/scripts.js')?>"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="<?php echo base_url('assets/js/bootstrap.min.js')?>"></script>
+
 </body>
 </html>

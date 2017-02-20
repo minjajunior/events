@@ -77,6 +77,8 @@ class Admin extends CI_Controller {
 
     }
 
+
+
     /*
      * This function process Admin logout process
      */

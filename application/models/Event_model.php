@@ -262,4 +262,29 @@ class Event_model extends CI_Model {
         $row = $query->row_array();
         return $row['event_id'];
     }
+
+
+    /*
+     * This function returns data for different reports
+     */
+
+    public function event_report($data){
+
+            if($data['category']='member'){
+
+                $this->db->select('*');
+                $this->db->from('member');
+                $where = "member_cash < member_pledge AND event_id =" .$data['event_id'] ;
+                $this->db->where($where);
+                $query= $this->db->get();
+                return $query->result_array();
+
+            }else{
+
+                print_r('Devid');
+            }
+
+
+
+    }
 }

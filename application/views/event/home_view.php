@@ -152,20 +152,6 @@ $this->load->view('shared/header');
                     <div class="chrt-inner">
                         <div class="row">
                             <div class="col-md-6">
-                                <?php if (isset($member_details['error']) && $member_details['error'] == "0" && isset($this->session->admin_id)) {?>
-                                    <div class="graph-form">
-                                        <div class="form-body">
-                                            <a class="btn btn-default blue" href="<?php echo site_url('event/template/member')?>" >Download Member Template</a>
-                                            <?php echo form_open_multipart('event/upload_members/'.$event_id); ?>
-                                                <div class="form-group">
-                                                    <input type="file" name="members">
-                                                    <p class="help-block">Upload .xls or .xlsx file</p>
-                                                </div>
-                                                <button type="submit" name="submit" class="btn btn-default">Upload</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                <?php } ?>
                                 <div class="stats-grid">
                                     <div class="stats-head">
                                         <h4 class="title3">
@@ -208,15 +194,13 @@ $this->load->view('shared/header');
                                         <?php } ?>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <?php if (isset($budget_details['error']) && $budget_details['error'] == "0" && isset($this->session->admin_id)) {?>
+                                <?php if (isset($this->session->admin_id)) {?>
                                     <div class="graph-form">
                                         <div class="form-body">
-                                            <a class="btn btn-default blue" href="<?php echo site_url('event/template/budget')?>" >Download Budget Template</a>
-                                            <?php echo form_open_multipart('event/upload_budget/'.$event_id); ?>
+                                            <a class="btn btn-default blue" href="<?php echo site_url('event/template/member')?>" >Download Member Template</a>
+                                            <?php echo form_open_multipart('event/upload_members/'.$event_id); ?>
                                             <div class="form-group">
-                                                <input type="file" name="budget">
+                                                <input type="file" name="members">
                                                 <p class="help-block">Upload .xls or .xlsx file</p>
                                             </div>
                                             <button type="submit" name="submit" class="btn btn-default">Upload</button>
@@ -224,6 +208,8 @@ $this->load->view('shared/header');
                                         </div>
                                     </div>
                                 <?php } ?>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="stats-grid">
                                     <div class="stats-head">
                                         <h4 class="title3">
@@ -266,6 +252,20 @@ $this->load->view('shared/header');
                                         <?php } ?>
                                     </div>
                                 </div>
+                                <?php if (isset($this->session->admin_id)) {?>
+                                    <div class="graph-form">
+                                        <div class="form-body">
+                                            <a class="btn btn-default blue" href="<?php echo site_url('event/template/budget')?>" >Download Budget Template</a>
+                                            <?php echo form_open_multipart('event/upload_budget/'.$event_id); ?>
+                                            <div class="form-group">
+                                                <input type="file" name="budget">
+                                                <p class="help-block">Upload .xls or .xlsx file</p>
+                                            </div>
+                                            <button type="submit" name="submit" class="btn btn-default">Upload</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                         <!--//charts-->

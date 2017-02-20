@@ -61,6 +61,13 @@ $this->load->view('shared/header');
                                                 <?php echo form_error('membername'); ?>
                                             </div>
                                         </div>
+                                            <div class="form-group">
+                                                <label for="focusedinput" class="col-sm-2 control-label">Phone Number</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" name="memberphone" value="<?php echo $md->member_phone ?>" class="form-control1" id="focusedinput" placeholder="Phone Number">
+                                                    <?php echo form_error('memberphone'); ?>
+                                                </div>
+                                            </div>
                                         <div class="form-group">
                                             <label for="disabledinput" class="col-sm-2 control-label">Member Pledge</label>
                                             <div class="col-sm-8">
